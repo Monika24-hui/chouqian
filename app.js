@@ -1,5 +1,4 @@
-document.getElementById("jscheck").textContent = "JS: 已运行";
-alert("app.js 已运行");
+
 window.addEventListener("error", (e) => {
   const s = document.getElementById("status");
   if (s) s.textContent = "JS错误: " + (e.message || "未知错误");
