@@ -229,11 +229,17 @@ async function loadData() {
   let data = [];
   try {
     data = await loadData();
-  } catch {
-    fpoem.textContent = "数据未加载成功。\n\n解决办法：\n1) 确保你首次打开时有网络；\n2) 或者把 data.zh.json 内容直接内嵌到 app.js（我也可以给你内嵌版）。";
-    drawBtn.disabled = true;
-    return;
-  }
+  } catch (e) {
+  console.warn(e);
+  statusEl.textContent = "加载失败";
+  fpoem.textContent =
+    "数据未加载成功。\n\n错误信息：\n" +
+    (e?.message || String(e)) +
+    "\n\nDATA_URL = " + DATA_URL;
+  drawBtn.disabled = true;
+  return;
+}
+
 
   const dataByNo = new Map(data.map(x => [x.no, x]));
   initPoolIfNeeded(data.length);
