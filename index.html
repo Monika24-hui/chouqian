@@ -206,6 +206,28 @@
   <div class="toast" id="toast"></div>
 
   <div id="jscheck" style="color:#ffd166;font-size:12px;padding:8px 0;">JS: 未运行</div>
-  <script src="app.js"></script>
+<pre id="jserr" style="white-space:pre-wrap;color:#ff6b6b;font-size:12px;"></pre>
+
+<script>
+  window.addEventListener("error", (e) => {
+    document.getElementById("jserr").textContent =
+      "JS错误: " + (e.message || e.type || "未知") + "\n" +
+      (e.filename ? ("文件: " + e.filename + "\n") : "") +
+      (e.lineno ? ("行: " + e.lineno + " 列: " + e.colno + "\n") : "");
+  });
+  window.addEventListener("unhandledrejection", (e) => {
+    document.getElementById("jserr").textContent =
+      "Promise错误: " + (e.reason?.message || String(e.reason));
+  });
+</script>
+
+<script src="app.js?v=20260210c"
+        onerror="document.getElementById('jscheck').textContent='JS: 加载失败（app.js 未能下载）';">
+</script>
+
+<script>
+  document.getElementById("jscheck").textContent = "JS: app.js 已加载（若仍不工作请看下方错误）";
+</script>
+
 </body>
 </html>
