@@ -106,8 +106,10 @@ function saveCache(data) {
 }
 
 function loadHistory() {
-  return safeJsonParse(localStorage.getItem(STORAGE_KEYS.hist), []);
+  const v = safeJsonParse(localStorage.getItem(STORAGE_KEYS.hist), []);
+  return Array.isArray(v) ? v : [];
 }
+
 
 function saveHistory(hist) {
   localStorage.setItem(STORAGE_KEYS.hist, JSON.stringify(hist));
@@ -151,11 +153,28 @@ function renderFortune(f) {
   fpoem.textContent = f.poem?.trim() || "（无诗文）";
 
   const parts = [];
-  if (f.explain?.trim()) parts.push(f.explain.trim());
-  if (f.items) {
-    parts.push(Object.entries(f.items).map(([k,v])=>`${k}：${v}`).join("\n"));
+
+  // 只显示 explain
+  if (f.explain?.trim()) {
+    parts.push(f.explain.trim());
   }
+  
+  // items 每项单独换行
+  if (f.items && typeof f.items === "object") {
+    parts.push(
+      Object.entries(f.items)
+        .map(([k, v]) => `${k}：${v}`)
+        .join("\n")
+    );
+  }
+  
+  // 如果 items 是字符串（兼容）
+  if (typeof f.items === "string") {
+    parts.push(f.items);
+  }
+  
   fexp.textContent = parts.join("\n\n");
+
 
   copyBtn.disabled = false;
   shareBtn.disabled = false;
@@ -252,7 +271,7 @@ async function loadData() {
     const f = data[idx];
     renderFortune(f);
 
-    const newHist = [{ no: f.no, luck: f.luck, ts: Date.now() }, ...loadHistory()].slice(0, 500);
+    const newHist = [{ no: f.no, luck: f.luck, ts: Date.now() }, ...(loadHistory() || [])].slice(0, 500);
     saveHistory(newHist);
     renderHistory(newHist, dataByNo);
   });
