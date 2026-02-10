@@ -244,7 +244,7 @@ async function loadData() {
   const dataByNo = new Map(data.map(x => [x.no, x]));
   initPoolIfNeeded(data.length);
 
-  const hist = loadHistory();
+  const hist = loadHistory() || [];
   renderHistory(hist, dataByNo);
 
   drawBtn.addEventListener("click", () => {
