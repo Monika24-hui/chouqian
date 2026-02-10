@@ -1,3 +1,13 @@
+alert("app.js 已运行");
+window.addEventListener("error", (e) => {
+  const s = document.getElementById("status");
+  if (s) s.textContent = "JS错误: " + (e.message || "未知错误");
+});
+window.addEventListener("unhandledrejection", (e) => {
+  const s = document.getElementById("status");
+  if (s) s.textContent = "Promise错误: " + (e.reason?.message || String(e.reason));
+});
+
 
 const DATA_URL = ""./data_zh.json"";
 const STORAGE_KEYS = {
