@@ -10,7 +10,7 @@ window.addEventListener("unhandledrejection", (e) => {
 });
 
 
-const DATA_URL = ""./data_zh.json"";
+const DATA_URL = "./data_zh.json";
 const STORAGE_KEYS = {
   cache: "asakusa_omikuji_data_cache_v1",
   hist: "asakusa_omikuji_history_v1",
