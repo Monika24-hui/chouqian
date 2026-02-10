@@ -1,7 +1,7 @@
 // 浅草寺观音百签（中文版）PWA
 // 数据默认拉取：https://raw.githubusercontent.com/Tamshen/senso-ji-stick-data/master/data.zh.json
 
-const DATA_URL = "https://raw.githubusercontent.com/Tamshen/senso-ji-stick-data/master/data.zh.json";
+const DATA_URL = "https://cdn.jsdelivr.net/gh/Tamshen/senso-ji-stick-data@master/data.zh.json";
 const STORAGE_KEYS = {
   cache: "asakusa_omikuji_data_cache_v1",
   hist: "asakusa_omikuji_history_v1",
